@@ -9,7 +9,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <span class="navbar-text">
-                            Logged in as: <em>(current user)</em>
+                            Logged in as: <span id="currentUser">{{username}}</span>
                         </span>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Logout</a>
@@ -21,7 +21,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <table class="table table-striped table-dark">
+            <table class="table table-striped table-dark mainTable">
                 <thead>
                     <tr>
                     <th scope="col">PIC Number</th>
@@ -31,13 +31,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each flightPlans}}
-                    <tr>
-                        <td>{{PICnumber}}</td>
-                        <td>{{flightPlanType}}</td>
-                        <td>{{timeSubmitted}}</td>
-                        <td>{{approvalStatus}}</td>
-                    </tr>                    
+                    {{#each flight_info}}
+                        {{#if approvalStatus}}
+                        <button data-code= type="button" class="btn btn-primary moreInfo">More Info</button>
+                            <tr>
+                                <td>{{PICnumber}}</td>
+                                <td>{{flightPlanType}}</td>
+                                <td>{{timeSubmitted}}</td>
+                                <td>{{approvalStatus}}</td>
+                            </tr>
+                        <button type="button" class="btn btn-primary weather">Weather</button>
+                        {{else}}
+                        <button data-code= type="button" class="btn btn-primary moreInfo">More Info</button>
+                            <tr>
+                                <td>{{PICnumber}}</td>
+                                <td>{{flightPlanType}}</td>
+                                <td>{{timeSubmitted}}</td>
+                                <td>{{approvalStatus}}</td>
+                            </tr>
+                        <button type="button" class="btn btn-success approve">✔</button>
+                        <button type="button" class="btn btn-danger notApprove">❌</button>
+                        <button type="button" class="btn btn-primary weather">Weather</button>
+                        {{/if}}                    
                     {{/each}}
                 </tbody>
             </table>
