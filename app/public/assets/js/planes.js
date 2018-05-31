@@ -54,31 +54,27 @@ $(function() {
         var code = $(this).data("code");
         $.ajax("/" + code, {
             type: "GET",
-            data: "",
-            success: function(data){
-                $("#moreInfoModalBody").html(data);
-                $("#moreInfoModal").modal('show');
-            }
-        }).then(function() {
-            // create javascript that makes popup window to show full detailed information on flight here.
+            data: ""
+        }).then(function(recieved) {
+            $("#moreInfoModalBody").html(recieved);
+            $("#moreInfoModal").modal('show');
         });
     });
     $(".weather").on("click", function(event) {
         event.preventDefault();
         var code = $(this).data("code");
-        $.ajax("/flight_plan/" + code, {
+        $.ajax("/user/" + code, {
             type: "GET",
-            url: "http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=2626d7eb76d0259ea5d3e2117882a27d"
-        }).then(function(data) {
-            $.ajax("weather api address here", {
+            url: ""
+        }).then(function(planData) {
+            var xStart = planData.features.point1.x;
+            var yStart = plantData.features.point1.y;
+            $.ajax("https://tile.openweathermap.org/map/clouds_new/5/" + xStart + "/" + yStart + ".png?appid=2626d7eb76d0259ea5d3e2117882a27d", {
                 type: "GET",
-                data: "",
-                success: function(data){
-                    $("#weatherModalBody").html(data);
-                    $("#weatherModal").modal('show');
-                }
+                data: ""
             }).then(function(weather) {
-                // create popup window using weather api data and coordinates from data
+                $("#weatherModalBody").html(weather);
+                $("#weatherModal").modal('show');
             });
         });
     });
