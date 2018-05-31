@@ -7,7 +7,7 @@ describe("NottheFAA", function() {
         Nightmare({ show: true })
             .goto("https://edgar-munoz-aeronyde.github.io/project_2/")
             .type("#username", "admin")
-            .type("#password", "password123")
+            .type("#password", "123")
             .click("#login")
             .wait("#links a")
             .evaluate(function() {
