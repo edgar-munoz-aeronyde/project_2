@@ -25,11 +25,11 @@ $(function() {
     });
     $(".approve").on("click", function(event) {
         event.preventDefault();
-        var code = $(this).data("code");
+        var id = $(this).data("id");
         var action = {
-            approvalStatus: true
+            approval_status: true
         }
-        $.ajax("/api/flight_info/" + code, {
+        $.ajax("/api/userUpdate/" + id, {
             type: "PUT",
             data: action
         }).then(function() {
@@ -38,11 +38,11 @@ $(function() {
     });
     $(".notApprove").on("click", function(event) {
         event.preventDefault();
-        var code = $(this).data("code");
+        var id = $(this).data("id");
         var action = {
-            approvalStatus: false
+            approval_status: false
         }
-        $.ajax("/api/flight_info/" + code, {
+        $.ajax("/api/userUpdate/" + id, {
             type: "PUT",
             data: action
         }).then(function() {
@@ -51,8 +51,8 @@ $(function() {
     });
     $(".moreInfo").on("click", function(event) {
         event.preventDefault();
-        var code = $(this).data("code");
-        $.ajax("/" + code, {
+        var id = $(this).data("id");
+        $.ajax("home/" + id, {
             type: "GET",
             data: ""
         }).then(function(recieved) {
@@ -62,8 +62,8 @@ $(function() {
     });
     $(".weather").on("click", function(event) {
         event.preventDefault();
-        var code = $(this).data("code");
-        $.ajax("/user/" + code, {
+        var id = $(this).data("id");
+        $.ajax("/user/" + id, {
             type: "GET",
             url: ""
         }).then(function(planData) {

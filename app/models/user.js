@@ -39,11 +39,15 @@ module.exports = function(sequelize, DataTypes){
                 len: [1]
             }},
         features: {
-                type: DataTypes.JSON,
-                allowNull: false,
-                validate: {
-                    len: [1]
-                }},
+            type: DataTypes.JSON,
+            allowNull: false,
+            validate: {
+                len: [1]
+            }},
+        approval_status: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true,
+        }
      
      });   
      return User; 
