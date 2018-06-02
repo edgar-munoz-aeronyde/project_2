@@ -3,10 +3,13 @@ $(function() {
         event.preventDefault();
         var enteredUsername = $("#username").val().trim();
         var enteredPassword = $("#password").val().trim();
-        $.ajax("/", {
+        console.log("before ajax, have the following: " + enteredUsername + " " + enteredPassword);
+        $.ajax("/login", {
             type: "GET",
             data: ""
         }).then(function(data) {
+            console.log("in .then");
+            var count = 0;
             data.forEach(function()  {
                 if (username === enteredUsername && password === enteredPassword) {
                     $.ajax("/home", {
@@ -14,13 +17,17 @@ $(function() {
                         data: username
                     }).then(function() {
                         console.log("sucessfully logged in as " + username);
+                        { break; }
                     });
-                } else {
-                    location.reload();
-                    var message = $("<p>").text("Your username and password combination does not match any in our database");
-                    $("#login").append(message);
                 }
+                count++;
+                console.log(count);
             });
+            if (count === data.length) {
+                location.reload();
+                var message = $("<p>").text("Your username and password combination does not match any in our database");
+                $("#login").append(message);
+            }
         });
     });
     $(".approve").on("click", function(event) {

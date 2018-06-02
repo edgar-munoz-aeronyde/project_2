@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes){
-    var Flight_plan= sequelize.define('flight_plan',{
+    var Flight_plan= sequelize.define('flight_plans',{
  
         start_time: {
             type: DataTypes.INTEGER,

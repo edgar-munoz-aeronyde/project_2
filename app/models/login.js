@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes){
-    var Login= sequelize.define('login',{
+    var Login= sequelize.define('logins',{
 
         user_name: {
             type: DataTypes.STRING,

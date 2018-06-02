@@ -25,11 +25,15 @@ app.use(bodyParser.json());
 // Static directory
 app.use(express.static("public"));
 
+// Set Handlebars.
+var exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
 // Routes
 // =============================================================
-//require("./routes/html-routes.js")(app);
-//require("./routes/author-api-routes.js")(app);
-//require("./routes/post-api-routes.js")(app);
+require("./routes/api-routes.js")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
@@ -39,7 +43,7 @@ app.use(express.static("public"));
     }),
     Login.create({
       user_name: "admin",
-      password:"123"
+      password: "123"
       })
   });
 

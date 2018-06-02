@@ -1,7 +1,7 @@
 {
 "laanc": {
  "username": "root",
- "password": null,
+ "password": "password",
  "database": "laanc_db",
  "host": "localhost",
  "port": 3306,
