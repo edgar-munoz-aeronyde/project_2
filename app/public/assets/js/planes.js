@@ -6,29 +6,51 @@ $(function() {
         console.log("before ajax, have the following: " + enteredUsername + " " + enteredPassword);
         $.ajax("/login", {
             type: "GET",
-            data: ""
-        }).then(function(data) {
-            console.log("in .then");
-            var count = 0;
-            data.forEach(function()  {
-                if (username === enteredUsername && password === enteredPassword) {
-                    $.ajax("/home", {
-                        type: "GET",
-                        data: username
-                    }).then(function() {
-                        console.log("sucessfully logged in as " + username);
-                        { break; }
-                    });
+            data: "",
+            success: function(data) {
+                var count = 0;
+                data.forEach(function(element)  {
+                    console.log(element.id);
+                    if (element.user_name === enteredUsername && element.password === enteredPassword) {
+                        console.log("match")
+                        $.ajax("/home", {
+                            type: "GET",
+                            data: username
+                        }).then(function() {
+                            console.log("sucessfully logged in as " + username);
+                            { break; }
+                        });
+                    }
+                    count++;
+                    console.log(count);
+                })
+                if (count === data.length) {
+                    var message = $("<p>").text("Your username and password combination does not match any in our database");
+                    $("#login").append(message);
                 }
-                count++;
-                console.log(count);
-            });
-            if (count === data.length) {
-                location.reload();
-                var message = $("<p>").text("Your username and password combination does not match any in our database");
-                $("#login").append(message);
             }
-        });
+        })
+        // .then(function(data) {
+        //     console.log(data);
+        //     var count = 0;
+        //     data.forEach(function()  {
+        //         // if (user_name === enteredUsername && password === enteredPassword) {
+        //         if (this.id == 1) {
+        //             console.log("match")
+        //             $.ajax("/home", {
+        //                 type: "GET",
+        //                 data: username
+        //             }).then(function() {
+        //                 console.log("sucessfully logged in as " + username);
+        //                 { break; }
+        //             });
+        //         }
+        //         count++;
+        //         console.log(count);
+        //     });
+        // });
+
+        
     });
     $(".approve").on("click", function(event) {
         event.preventDefault();

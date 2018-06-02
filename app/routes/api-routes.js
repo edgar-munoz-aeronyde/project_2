@@ -2,8 +2,6 @@ var db = require("../models");
 var crypto = require("crypto");
 var path = require("path");
 
-
-
 module.exports = function(app){
 
 app.get("/", function(req, res) {
@@ -13,7 +11,7 @@ app.get("/", function(req, res) {
 // route from login page to check submitted login information is correct
 app.get("/login", function(req, res){
   console.log("before database connection");
-    db.Login.findAll({
+    db.login.findAll({
     }).then(function(result){
       res.json(result)
     });
@@ -26,10 +24,12 @@ app.get("/login", function(req, res){
 // route to load the home page of the app with table information
 app.get("/home", function(req, res) {
   console.log("got home page request");
-  db.User.findAll({
+  db.user.findAll({
   }).then(function(result){
-    res.json({"user": result, "currentUser": req.body})
-    res.render(path.join(__dirname, "../views/home.handlebars"))
+    var flight_info = result
+    console.log(flight_info);
+    // res.json({"user": result, "currentUser": req.body})
+    res.render(path.join(__dirname, "../views/home.handlebars"), flight_info)
   });
   // var dbQuery = "SELECT * FROM users";
   // connection.query(dbQuery, function(err, result) {
@@ -40,7 +40,7 @@ app.get("/home", function(req, res) {
 
 // route for getting more infomation on specific flight
 app.get("/home/:id", function(req, res) {
-  db.Flight_plan.findOne({
+  db.flight_plan.findOne({
     where: {
       id: req.params.id
     }
@@ -56,7 +56,7 @@ app.get("/home/:id", function(req, res) {
 
 // route for grabbing all user information for a specific flight
 app.get("/user/:id", function(req, res) {
-  db.User.findOne({
+  db.user.findOne({
     where: {
       id: req.params.id
     }
@@ -75,7 +75,7 @@ app.post("/api/submission_info", function(req,res){
     // if they already have a token
   if(req.body.token){
       // update flight_plan table
-    db.Flight_plan.update(req.body, {
+    db.flight_plan.update(req.body, {
       start_time: req.body.start_time,
       end_time: req.body.end_time,
       max_altitude: req.body.max_altitude,
@@ -91,7 +91,7 @@ app.post("/api/submission_info", function(req,res){
     //   res.json(results);
     // })
     // update user table
-    db.User.update(req.body, {
+    db.user.update(req.body, {
       client_name: req.body.client_name,
       type_of_submission: req.body.type_of_submission,
       client_number: req.body.client_number,
@@ -115,7 +115,8 @@ app.post("/api/submission_info", function(req,res){
     // create the random token
     newToken = crypto.randomBytes(9).toString('hex');
     // create new entry in flight plan table
-    db.Flight_plan.create(req.body, {
+    console.log(req.body);
+    db.flight_plan.create(req.body, {
       start_time: req.body.start_time,
       end_time: req.body.end_time,
       max_altitude: req.body.max_altitude,
@@ -129,7 +130,7 @@ app.post("/api/submission_info", function(req,res){
     //     res.json(results);
     // })
     // create new entry into user table
-    db.User.create(req.body, {
+    db.user.create(req.body, {
       client_name: req.body.client_name,
       type_of_submission: req.body.type_of_submission,
       client_number: req.body.client_number,
@@ -152,7 +153,7 @@ app.post("/api/submission_info", function(req,res){
 
 app.delete("/delete/:id", function(req, res){
   var currentRow = req.params.id;
-  db.User.destroy({
+  db.user.destroy({
     where: {
       id: currentRow
     }
@@ -160,7 +161,7 @@ app.delete("/delete/:id", function(req, res){
     res.json(response);
     console.log("row " + currentRow + "deleted from user table");
   });
-  db.Flight_plan.destroy({
+  db.flight_plan.destroy({
     where: {
       id: currentRow
     }
@@ -193,7 +194,7 @@ app.delete("/delete/:id", function(req, res){
 app.put("/api/userUpdate/:id", function(req, res){
     var currentRow = req.params.id;
     var statusChange = req.body.approval_status;
-    db.User.update({
+    db.user.update({
       where: {
         id: currentRow
       },
