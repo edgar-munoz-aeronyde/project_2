@@ -1,6 +1,9 @@
 {
   "name": "laanc",
   "version": "1.0.0",
+  "engines": {
+    "node": "8.9.4"
+  },
   "description": "",
   "main": "server.js",
   "dependencies": {
@@ -10,8 +13,7 @@
     "mysql": "^2.15.0",
     "mysql2": "^1.5.3",
     "path": "^0.12.7",
-    "sequelize": "^4.37.9",
-    "buildpack-nodejs-loader": "^1.0.0"
+    "sequelize": "^4.37.9"
   },
   "devDependencies": {},
   "scripts": {
